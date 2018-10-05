@@ -65,8 +65,14 @@ void LinkedList::traverse_opp_helper(Node* ptr)
 
 void LinkedList::traverse_opp()
 {
-  traverse_opp_helper(head);
-  cout << endl; // pressing enter can be considered SLIGHT BUG
+  if (head == NULL)
+    cout << "Empty!" << endl;
+  else
+  {
+    traverse_opp_helper(head);
+    cout << endl; 
+    // SOLVED// pressing enter can be considered SLIGHT BUG
+  }
 }
 
 
