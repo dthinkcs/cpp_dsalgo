@@ -32,33 +32,11 @@ class CDLinkedList
     void delete_speific();
     void delete_head();
     void delete_tail();
+    void delete_specific(int item);
+
 };
 
 
-
-void CDLinkedList::insert_tail(int item)
-{
-  DNode* newptr = new DNode(item);
-  
-  if (head == NULL)
-  {
-    head = newptr;
-  }
-  else
-  {
-    DNode* ptr = head->prev;
-    //for (ptr = head; ptr->next != head; ptr=ptr->next);
-    // NOT GENERIC CODE
-    //ptr->next = newptr;
-    //newptr->next = head;
-    //newptr->prev = ptr;
-    newptr->next = ptr->next;
-    newptr->prev = ptr;
-    ptr->next->prev = newptr;
-    ptr->next = newptr;
-  }
-    
-}
 
 void CDLinkedList::insert_head(int item)
 {
@@ -83,38 +61,7 @@ void CDLinkedList::insert_head(int item)
   }
 }
 
-void CDLinkedList::insert_pos(int item, int pos)
-{
-  DNode* newptr = new DNode(item);
 
-  if (pos < 1)
-    cout << "Invalid Position" << endl;
-  else if (head == NULL && pos != 1)
-    cout << "Invalid Position" << endl;
-  else if (pos == 1)
-  {
-    insert_head(item);
-  }
-  else
-  {
-
-    int count = 2;
-    DNode* ptr;
-    for (ptr = head; ptr->next != head && count != pos ; count++, ptr=ptr->next);
-    if (pos == count) // only when both are true
-    {
-      // GENERIC EVEN if tail == ptr
-      newptr->next = ptr->next;
-      newptr->prev = ptr;
-      ptr->next->prev = newptr;
-      ptr->next = newptr;      
-    }
-    else
-    {
-      cout << "Invalid Position" << endl;
-    }
-  }
-}
 
 void CDLinkedList::delete_head()
 {
@@ -144,7 +91,7 @@ void CDLinkedList::delete_head()
   }
 }
 
-void CDLinkedList::delete_head()
+void CDLinkedList::delete_tail()
 {
   if (head == NULL)
   {
@@ -169,6 +116,49 @@ void CDLinkedList::delete_head()
     head->prev = tail_before;
     
   }
+}
+
+
+void CDLinkedList::delete_specific(int item)
+{
+  if (head == NULL)
+    cout << "Empty List! Nothing to delete" << endl;
+  else if (head->data == item)
+  {
+      delete_head();
+  }
+  else
+  { // we have checked head already so we can check from  ptr->next (where ptr==next)
+    DNode* ptr;
+    for (ptr = head; ptr->next != head && ptr->next->data != item; ptr=ptr->next);
+    if (ptr->next == head)
+      cout << "Couldnt Find Item" << endl;
+    else
+    {
+      // delete ptr->next  ; since must not be head
+      // MUST CHANGE head->prev
+      // MAY BE YOU DONT NEED THIS
+      //if (ptr->next->next == head)
+      //{
+      //  head->prev = ptr;
+        
+      //  delete ptr->next;
+      //  ptr->next = head;
+        
+      //}
+      //else
+      
+      //{
+        
+        // UNTIL YOU ARE AT THE EDGES DONT CARE CIRCULAR
+        DNode* tmp = ptr->next;
+        ptr->next = tmp->next;
+        delete tmp;
+        ptr->next->prev = ptr;
+      //}
+    }
+  }
+
 }
 
 
@@ -221,44 +211,31 @@ void CDLinkedList::traverse_opp()
 int main() 
 {
   CDLinkedList cdll1;
-  /*
-  cdll1.insert_tail(10);
-  cdll1.insert_tail(20);
-  cdll1.insert_tail(30);
-  cdll1.insert_tail(40);
-  */
+
     cdll1.insert_head(10);
     cdll1.insert_head(20);
     cdll1.insert_head(30);
-    //cdll1.insert_head(40);
-    
-    /*
-    cdll1.delete_head();
+    cdll1.insert_head(40);
+    cdll1.insert_head(50);
+
+      cdll1.delete_specific(30);
   cdll1.traverse();
   cdll1.traverse_opp();
   
-      cdll1.delete_head();
+      cdll1.delete_specific(10);
   cdll1.traverse();
   cdll1.traverse_opp();
   
-        cdll1.delete_head();
-  cdll1.traverse();
-  cdll1.traverse_opp();
-  */
-      cdll1.delete_tail();
+        cdll1.delete_specific(50);
   cdll1.traverse();
   cdll1.traverse_opp();
   
-      cdll1.delete_tail();
+          cdll1.delete_specific(20);
   cdll1.traverse();
   cdll1.traverse_opp();
   
-        cdll1.delete_tail();
+  cdll1.delete_specific(40);
   cdll1.traverse();
   cdll1.traverse_opp();
 
-
-
-
-  return 0;
 }
