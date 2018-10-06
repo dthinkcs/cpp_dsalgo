@@ -30,33 +30,10 @@ class CDLinkedList
     void insert_pos(int, int);
     void insert_tail(int);
     void delete_speific();
+    void delete_head();
 };
 
-/*
-void CDLinkedList::create()
-{
-  DNode* tail = head; 
-  do
-  {
-    cout << "Enter Number (-999 to Exit): ";
-    cin >> n;
-    
-    DNode* newptr = new DNode(n);
-    if (head == NULL)
-    {
-      head = newptr;
-      
-      tail = head;
-    }
-    else
-    {
-      tail->next = newptr;
-      tail->
-    }
-    
-  }while (n != -999);
-}
-*/
+
 
 void CDLinkedList::insert_tail(int item)
 {
@@ -138,6 +115,34 @@ void CDLinkedList::insert_pos(int item, int pos)
   }
 }
 
+void CDLinkedList::delete_head()
+{
+  if (head == NULL)
+  {
+    cout << "Empty List! Nothing to delete" << endl;
+  }
+  else if (head->next == head)
+  {
+    delete head;
+    head = NULL;
+  }
+  else
+  { // at least 2 elements
+
+    // find tail
+    DNode* tail = head->prev;
+    //for (ptr=head; ptr->next != head; ptr=ptr->next);
+    // replication
+    // modification
+    head = head->next;
+    delete tail->next;
+    // adjustmentS
+    tail->next = head;
+    head->prev = tail;
+    
+  }
+}
+
 
 void CDLinkedList::traverse()
 {
@@ -182,6 +187,7 @@ void CDLinkedList::traverse_opp()
 
 
 
+
 int main() 
 {
   CDLinkedList cdll1;
@@ -195,7 +201,19 @@ int main()
     cdll1.insert_head(20);
     cdll1.insert_head(30);
     //cdll1.insert_head(40);
+    cdll1.delete_head();
   cdll1.traverse();
   cdll1.traverse_opp();
+  
+      cdll1.delete_head();
+  cdll1.traverse();
+  cdll1.traverse_opp();
+  
+        cdll1.delete_head();
+  cdll1.traverse();
+  cdll1.traverse_opp();
+
+
+
   return 0;
 }
