@@ -89,9 +89,18 @@ void CDLinkedList::insert_head(int item)
     head = newptr; // handled in constructor
   else
   {
+    // EPIPHANY:: ptr->next is BOTH head AND head->prev here !!!
+    // EPIPHNY :: we also have to change head->next
+    
     newptr->next = head;
     newptr->prev = head->prev;
+    
+    // BUG WAS HERE: non generic code was here if (head->next == head){head->next = newptr} (NOT ALWAYYS )  
+    DNode* tail = head->prev;
     head->prev = newptr;
+    tail->next = newptr;
+  
+    
     head = newptr;
   }
 }
@@ -183,10 +192,9 @@ int main()
   cdll1.insert_tail(40);
   */
     cdll1.insert_head(10);
-  cdll1.insert_head(20);
-  cdll1.insert_head(30);
-  cdll1.insert_head(40);
-
+    cdll1.insert_head(20);
+    cdll1.insert_head(30);
+    //cdll1.insert_head(40);
   cdll1.traverse();
   cdll1.traverse_opp();
   return 0;
