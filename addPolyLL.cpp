@@ -5,7 +5,7 @@ class Node
 };
 
 
-Node* merge(LinkedList l1, LinkedListl2)
+Node* add(LinkedList l1, LinkedList l2)
 {
 	Node *head1, *ptr1 = l1.head;
 	Node *head2, *ptr2 = l2.head;
@@ -38,4 +38,18 @@ Node* merge(LinkedList l1, LinkedListl2)
 		// {}
 		ptr3=ptr3->next;
 	}
+
+	while (ptr1)
+	{
+		ptr1
+		ptr3 
+	}
+
+	while (ptr2)
+	{
+		ptr2
+		ptr3 
+	}
+
+	return head3;
 }
