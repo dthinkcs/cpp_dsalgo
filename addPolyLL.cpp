@@ -16,10 +16,6 @@ class DNode
       next = this;
       prev = this;
     }
-
-    void insertPoly();
-
-      // void add(DNode*, DNode*);
 };
 
 void insertPoly(DNode* poly)
@@ -64,6 +60,11 @@ void display(DNode* poly)
     cout << endl;
 }
 
+void attach(DNode* newptr, DNode* ptr)
+{
+
+}
+
 
 void add(DNode* poly1, DNode* poly2, DNode* poly3)
 {
@@ -77,7 +78,8 @@ void add(DNode* poly1, DNode* poly2, DNode* poly3)
         {
 
             DNode* newptr = new DNode(poly1->next->expo, poly1->next->coeff);
-            // attach
+            // attach (newptr, ptr=poly3)
+
             DNode* ptr = poly3;
             newptr->next = ptr->next;
             newptr->prev = ptr;
