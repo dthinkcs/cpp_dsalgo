@@ -1,55 +1,169 @@
-class Node
+#include <iostream>
+using namespace std;
+
+class DNode
 {
-	int data;
-	Node* next;
+  public:
+    int expo;
+    int coeff;
+    DNode* next;
+    DNode* prev;
+
+    DNode(int e, int c)
+    { // IMP
+      expo = e;
+      coeff = c;
+      next = this;
+      prev = this;
+    }
+
+    void insertPoly();
+
+      // void add(DNode*, DNode*);
 };
 
-
-Node* add(LinkedList l1, LinkedList l2)
+void insertPoly(DNode* poly)
 {
-	Node *head1, *ptr1 = l1.head;
-	Node *head2, *ptr2 = l2.head;
-	Node* head3; 
+    DNode* ptr = poly;
+    int n, coeff;
+    cout << "Enter degree of polynomial: ";
+    cin >> n;
 
-	while (ptr1 && ptr2)
-	{
-		if (ptr1->data < ptr2->data)
-		{	
-			// take it in
-			if (!head3)
-				head3 = new Node(ptr1->data);
-			else
-				ptr3 = new Node(ptr1->data);
+    for (int i = n; i >= 0; i--)
+    {
+        cout << "Enter coeff of exponent " << i << " :";
+        cin >> coeff;
 
-			// advance ptr1
-			ptr1=ptr1->next;
-		}
-		else
-		{
-			if (!head3)
-				head3 = new Node(ptr2->data);
-			else
-				ptr3 = new Node(ptr2->data);
+        if (coeff != 0)
+        {
+            DNode* newptr = new DNode(i, coeff);
+            // insert after ptr->next
+            newptr->next = ptr->next;
+            newptr->prev = ptr;
+            ptr->next->prev = newptr;
+            ptr->next = newptr;
+        }
+        ptr=ptr->next; // THIS WAS MISSING (BUG!!!) without this this made the code equivalent to adding to head;
+    }
+}
+
+void display(DNode* poly)
+{
+    DNode* ptr = poly->next;
+    if (ptr == NULL)
+    {
+        cout << "EMPTY!" << endl;
+        return;
+    }
+
+    do
+    {
+        cout << ptr->coeff << "x^" << ptr->expo  << "\t";
+        ptr = ptr->next;
+    } while (ptr != poly);
+    cout << endl;
+}
 
 
-			ptr2=ptr2->next;
-		}
-		// else addition if equal
-		// {}
-		ptr3=ptr3->next;
-	}
+void add(DNode* poly1, DNode* poly2, DNode* poly3)
+{
+    DNode* poly1copy = poly1;
+    DNode* poly2copy = poly2;
+    //DNode* poly3copy = poly3;
 
-	while (ptr1)
-	{
-		ptr1
-		ptr3 
-	}
+    while (poly1->next != poly1copy && poly2->next != poly2copy)
+    {
+        if (poly1->next->expo > poly2->next->expo)
+        {
 
-	while (ptr2)
-	{
-		ptr2
-		ptr3 
-	}
+            DNode* newptr = new DNode(poly1->next->expo, poly1->next->coeff);
+            // attach
+            DNode* ptr = poly3;
+            newptr->next = ptr->next;
+            newptr->prev = ptr;
+            ptr->next->prev = newptr;
+            ptr->next = newptr;
+            // increment
+            poly1 = poly1->next;
 
-	return head3;
+        }
+        else if (poly1->next->expo < poly2->next->expo)
+        {
+            DNode* newptr = new DNode(poly2->next->expo, poly2->next->coeff);
+            // attach
+            DNode* ptr = poly3;
+            newptr->next = ptr->next;
+            newptr->prev = ptr;
+            ptr->next->prev = newptr;
+            ptr->next = newptr;
+            // increment
+            poly2 = poly2->next;
+
+        }
+        else
+        {
+            // if addition result != 0 then add the new DNode
+            int result = poly1->next->coeff + poly2->next->coeff;
+            if (result != 0)
+            {
+                DNode* newptr = new DNode(poly1->next->expo, result);
+                // attach
+                DNode* ptr = poly3;
+                newptr->next = ptr->next;
+                newptr->prev = ptr;
+                ptr->next->prev = newptr;
+                ptr->next = newptr;
+
+            }
+            poly1 = poly1->next;
+            poly2 = poly2->next;
+        }
+
+        poly3 = poly3->next;
+    }
+
+    while (poly1->next != poly1copy)
+    {
+        DNode* newptr = new DNode(poly1->next->expo, poly1->next->coeff);
+        // attach
+        DNode* ptr = poly3;
+        newptr->next = ptr->next;
+        newptr->prev = ptr;
+        ptr->next->prev = newptr;
+        ptr->next = newptr;
+        // increment
+        poly1 = poly1->next;
+        poly3 = poly3->next;
+    }
+
+    while (poly2->next != poly2copy)
+    {
+        DNode* newptr = new DNode(poly2->next->expo, poly2->next->coeff);
+        // attach
+        DNode* ptr = poly3;
+        newptr->next = ptr->next;
+        newptr->prev = ptr;
+        ptr->next->prev = newptr;
+        ptr->next = newptr;
+        // increment
+        poly2 = poly2->next;
+        poly3 = poly3->next;
+
+    }
+}
+
+
+int main()
+{
+    DNode* poly1 = new DNode(0, 0);
+    DNode* poly2 = new DNode(0, 0);
+    DNode* poly3 = new DNode(0, 0);
+    insertPoly(poly1);
+    display(poly1);
+    insertPoly(poly2);
+    display(poly2);
+
+    add(poly1, poly2, poly3);
+    display(poly3);
+
 }
