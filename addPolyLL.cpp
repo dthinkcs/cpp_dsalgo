@@ -18,6 +18,19 @@ class DNode
     }
 };
 
+
+void attach(DNode* newptr, DNode* ptr)
+{
+    if (newptr == NULL || ptr == NULL)
+        return;
+    newptr->next = ptr->next;
+    newptr->prev = ptr;
+    ptr->next->prev = newptr;
+    ptr->next = newptr;
+
+}
+
+
 void insertPoly(DNode* poly)
 {
     DNode* ptr = poly;
@@ -34,10 +47,7 @@ void insertPoly(DNode* poly)
         {
             DNode* newptr = new DNode(i, coeff);
             // insert after ptr->next
-            newptr->next = ptr->next;
-            newptr->prev = ptr;
-            ptr->next->prev = newptr;
-            ptr->next = newptr;
+            attach(newptr, ptr);
         }
         ptr=ptr->next; // THIS WAS MISSING (BUG!!!) without this this made the code equivalent to adding to head;
     }
@@ -60,17 +70,11 @@ void display(DNode* poly)
     cout << endl;
 }
 
-void attach(DNode* newptr, DNode* ptr)
-{
-
-}
-
 
 void add(DNode* poly1, DNode* poly2, DNode* poly3)
 {
     DNode* poly1copy = poly1;
     DNode* poly2copy = poly2;
-    //DNode* poly3copy = poly3;
 
     while (poly1->next != poly1copy && poly2->next != poly2copy)
     {
@@ -78,13 +82,7 @@ void add(DNode* poly1, DNode* poly2, DNode* poly3)
         {
 
             DNode* newptr = new DNode(poly1->next->expo, poly1->next->coeff);
-            // attach (newptr, ptr=poly3)
-
-            DNode* ptr = poly3;
-            newptr->next = ptr->next;
-            newptr->prev = ptr;
-            ptr->next->prev = newptr;
-            ptr->next = newptr;
+            attach (newptr, poly3);
             // increment
             poly1 = poly1->next;
 
@@ -93,11 +91,7 @@ void add(DNode* poly1, DNode* poly2, DNode* poly3)
         {
             DNode* newptr = new DNode(poly2->next->expo, poly2->next->coeff);
             // attach
-            DNode* ptr = poly3;
-            newptr->next = ptr->next;
-            newptr->prev = ptr;
-            ptr->next->prev = newptr;
-            ptr->next = newptr;
+            attach (newptr, poly3);
             // increment
             poly2 = poly2->next;
 
@@ -110,11 +104,7 @@ void add(DNode* poly1, DNode* poly2, DNode* poly3)
             {
                 DNode* newptr = new DNode(poly1->next->expo, result);
                 // attach
-                DNode* ptr = poly3;
-                newptr->next = ptr->next;
-                newptr->prev = ptr;
-                ptr->next->prev = newptr;
-                ptr->next = newptr;
+                attach (newptr, poly3);
 
             }
             poly1 = poly1->next;
@@ -128,11 +118,7 @@ void add(DNode* poly1, DNode* poly2, DNode* poly3)
     {
         DNode* newptr = new DNode(poly1->next->expo, poly1->next->coeff);
         // attach
-        DNode* ptr = poly3;
-        newptr->next = ptr->next;
-        newptr->prev = ptr;
-        ptr->next->prev = newptr;
-        ptr->next = newptr;
+        attach (newptr, poly3);
         // increment
         poly1 = poly1->next;
         poly3 = poly3->next;
@@ -142,11 +128,7 @@ void add(DNode* poly1, DNode* poly2, DNode* poly3)
     {
         DNode* newptr = new DNode(poly2->next->expo, poly2->next->coeff);
         // attach
-        DNode* ptr = poly3;
-        newptr->next = ptr->next;
-        newptr->prev = ptr;
-        ptr->next->prev = newptr;
-        ptr->next = newptr;
+        attach (newptr, poly3);
         // increment
         poly2 = poly2->next;
         poly3 = poly3->next;
