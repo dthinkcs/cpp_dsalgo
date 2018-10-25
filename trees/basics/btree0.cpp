@@ -1,6 +1,7 @@
 #include <iostream>
 #include <cmath>
 #include <queue>
+#include <bits/stdc++.h> 
 using namespace std;
 
 class BTNode
@@ -349,8 +350,8 @@ void printNodesLevelKBUGGY(BTNode* root, int k)
 	if (k <= 1) // considering level starts from level 1
 		cout << root->data;
 
-	printNodesLevelK(root->left, k - 1);
-	printNodesLevelK(root->right, k - 1);
+	printNodesLevelKBUGGY(root->left, k - 1);
+	printNodesLevelKBUGGY(root->right, k - 1);
 
 }
 
