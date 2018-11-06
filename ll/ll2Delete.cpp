@@ -31,12 +31,12 @@ Node* deleteNode(Node *head, int i) {
     {
 		int count = 1; // 1 for index 2 for position
       	Node* ptr;
-      	for (ptr = head; ptr != NULL && count != i ; count++, ptr = ptr->next);
+      	for (ptr = head; ptr->next != NULL && count != i ; count++, ptr = ptr->next);
       
-        if (ptr != NULL)
+        if (ptr->next != NULL)
         {
           Node* tmp = ptr->next;
-          if (ptr->next) // AnalyZE!!! REALLY IMPORTANT !!!HERE LIED A BUG
+          //if (ptr->next) // AnalyZE!!! REALLY IMPORTANT !!!HERE LIED A BUG
           	ptr->next = tmp->next;
           delete tmp;
         }
