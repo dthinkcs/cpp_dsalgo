@@ -14,14 +14,41 @@ public:
 *********/
 
 int length(Node *head) {
-    /* Don't write main().
-     * Don't read input, it is passed as function argument.
-     * Return output and don't print it.
-     * Taking input is handled automatically.
-     */
+
   int count;
   Node* ptr;
   for (count = 0, ptr = head; ptr; count++, ptr=ptr->next);
   return count;
     
 }
+
+int length2(Node *head) {
+
+  int count = 0;
+  for (Node* ptr = head; ptr; ptr=ptr->next)
+    count++;
+  return count;
+    
+}
+
+
+int length3(Node *head) {
+    
+  int count = 0;
+  
+  for (Node* ptr = head ; ptr ; count++, ptr=ptr->next);
+
+  return count;
+    
+}
+
+int length3buggy(Node *head) {
+    
+  int count = 0;
+  
+  for (Node* ptr = head ; ptr ; count++, ptr=ptr->next);
+
+  return count;
+    
+}
+
