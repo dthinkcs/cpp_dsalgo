@@ -76,9 +76,48 @@ int eval(BTNode* root)
 	}
 }
 
-BTToPrefix(Node* root)
-{
 
+void preorder(BTNode* root)
+{
+	if (root == NULL)
+		return;
+	cout << root->data << " ";
+	preorder(root->left);
+	preorder(root->right);
+
+}
+void inorder(BTNode* root)
+{
+	if (root == NULL)
+		return;
+	inorder(root->left);
+	cout << root->data << " ";
+	inorder(root->right);
+}
+
+void postorder(BTNode* root)
+{
+	if (root == NULL)
+		return;
+	postorder(root->left);
+	postorder(root->right);
+	cout << root->data << " ";
+}
+
+
+void BTToPrefix(BTNode* root)
+{
+	preorder(root);
+}
+
+void BTToInfix(BTNode* root)
+{
+	inorder(root);
+}
+
+void BTToPostfix(BTNode* root)
+{
+	postorder(root);
 }
 
 int main()
@@ -86,8 +125,8 @@ int main()
 	char postfix[MAX];
 	cin >> postfix;
 	BTNode* root = postfixToBT(postfix);
-	cout << "Evaluation" : eval(root) << endl;
-	cout << "PREFIX: " << BTToPrefix(root); cout << endl;
-	cout << "INNFIX: " << BTToInfix(root) << endl;
-	cout << "POSTFX: " << BTToPostfix(root) << endl;
+	cout << "Evaluation: " <<  eval(root) << endl;
+	cout << "PREFIX: "; BTToPrefix(root); cout << endl;
+	cout << "INNFIX: "; BTToInfix(root); cout << endl;
+	cout << "POSTFX: "; BTToPostfix(root); cout << endl;
 }
