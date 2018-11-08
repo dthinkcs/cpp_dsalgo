@@ -1,3 +1,29 @@
+
+void merge(int input[], int start,int end)
+{
+  int* arr = new int[end - start + 1]; int k = 0;
+  int mid = (start + end ) / 2; 
+  int i1 = start;
+  int i2 = mid + 1;
+  while (i1 <= mid && i2 <= end)
+  {
+    if (input[i1] <= input[i2])
+      arr[k++] = input[i1++];
+    else
+      arr[k++] = input[i2++];
+  }
+  
+  while (i1 <= mid)
+  	arr[k++] = input[i1++];
+    
+  while (i2 <= end)
+    arr[k++] = input[i2++];
+  
+  // copy into input
+  k = 0;
+  for (int i = start; i <= end; i++)
+    input[i] = arr[k++];
+}
 void merge(int input[], int start,int end)
 {
   int* arr = new int[end - start + 1]; int k = 0;
