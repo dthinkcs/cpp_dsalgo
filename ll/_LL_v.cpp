@@ -321,7 +321,7 @@ Node* mergeNONEW(Node* head1, Node* head2)
 			{
 				head = ptr2;
 				ptr = head;
-				ptr2 = ptr1->next;
+				ptr2 = ptr2->next;
 			}
 			else
 			{
