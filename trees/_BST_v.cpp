@@ -95,6 +95,18 @@ BSTNode* deleteBST(BSTNode* root, int item)
   return root;
 }
 
+BSTNode* search(BSTNode* root, int item)
+{
+  if (root == NULL)
+    return NULL;
+  if (root->data == item)
+     return root;
+  if (item < root->data)
+    return search(root->left, item);
+  else
+    return search(root->right, item);
+}
+
 int main()
 {
   BSTNode* root = NULL;
