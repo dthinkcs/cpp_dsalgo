@@ -43,29 +43,33 @@ node* kReverse(node*head,int n)
 	node * temp=head, * head1=head, * head2=head; 
 	while(temp!=NULL) 
 	{ 
-		// gotta reverse n if n | i
+		// gotta reverse n if n | i OR tempptr is at the last
 		if( i%n==0 || temp->next==NULL) 
 		{ 
-			node *head3 = temp->next; 
-			temp->next = NULL; 
-			node*h = head2; 
-			head2 = reverse_linked_list(head2); 
-			if (head1==head) 
+			// head3 is the next of temp // 1 2 3 | head3->4 5 6 
+			node* head3 = temp->next; 
+			temp->next = NULL; // cut temp->next // // 1 2 3->NULL| head3->4 5 6 
+			node* h = head2;  // h(head2_copy) stores -> 1 2 3
+			head2 = reverse_linked_list(head2);  // reverse head2-> 3 2 1->null
+
+			if (head1==head) // at the beginning 
 			{ 
-				head1=head2; 
-				head=head2; 
+				head1=head2;  // update head1 to head2
+				head=head2; // ORIGINAL head-> 3 2 1
 			} 
-			else 
-				head1->next=head2; 
-			h->next=head3;
-			head1=h;
+			else // otherwise
+				head1->next=head2;  // update head1->next to head2
+			h->next=head3; // head2_copy->next GETS head3(head->remainng)
+			head1=h; 
 			head2=head3; 
 			temp=head3; 
 		} 
+		// update tempptr
 		else
 		{ 
 			temp=temp->next; 
 		} 
+		// i always ++
 		i++; 
 	} 
 	return head;
