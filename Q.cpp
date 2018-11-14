@@ -67,3 +67,51 @@ int main()
 	line.addq(4);
 
 }
+
+
+/*
+
+#include <iostream>
+using namespace std;
+#define QUEUESIZE 10
+
+class Queue
+{
+  int q[QUEUESIZE];
+  
+  public:
+  Queue()
+  {
+    q[0] = 1;
+    q[1] = 1;
+  }
+  
+  void enqueue(int item)
+  {
+    if (isFull())
+      return;
+    q[q[1]++] = item; 
+  }
+  
+  int dequeue()
+  {
+    if (isEmpty())
+      return -999;
+    return q[q[0]++];
+  }
+  
+  
+  bool isFull()
+  {
+    return q[1] == QUEUESIZE - 1; // rear == QUEUESIZE - 1
+  }
+  
+  bool isEmpty()
+  {
+    return q[0] == q[1]; // front == rear 
+  }
+};
+
+
+
+*/
