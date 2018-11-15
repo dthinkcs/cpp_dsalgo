@@ -67,7 +67,7 @@ Node* multiply(Node* poly1start, Node* poly2start)
       if (i->expo == j->next->expo)
       {
         // delete j->next and UPDATE i->coeff
-        i->coeff += j->next->coeff;
+        i->coeff += j->next->coeff; // TODO if THE FINAL VALUE is zero //this value is zero
         Node* tmp = j->next;
         j->next = tmp->next;
         delete tmp;
@@ -78,6 +78,7 @@ Node* multiply(Node* poly1start, Node* poly2start)
   }
   traverse(poly3start);
 
+  // TODO remove if THE FINAL VALUES are zero 
 
   return poly3start;
 }
